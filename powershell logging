@@ -1,0 +1,84 @@
+# Print current logging state
+$moduleLoggingEnabled = (Get-ItemProperty "HKLM:\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\PowerShell\ModuleLogging").EnableModuleLogging
+$scriptBlockLoggingEnabled = (Get-ItemProperty "HKLM:\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\PowerShell\ScriptBlockLogging").EnableScriptBlockLogging
+$transcriptionEnabled = (Get-ItemProperty "HKLM:\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\PowerShell\Transcription").EnableTranscript
+
+Write-Host "Current logging state:"
+Write-Host "Module logging: $($moduleLoggingEnabled -eq 1)"
+Write-Host "Script block logging: $($scriptBlockLoggingEnabled -eq 1)"
+Write-Host "Transcription: $($transcriptionEnabled -eq 1)"
+
+# Prompt to enable or disable logging
+$choice = Read-Host "Do you want to enable (E) or disable (D) logging?"
+
+switch ($choice) {
+    "E" { # Enable logging
+        $loggingChoice = Read-Host "Which logging do you want to enable? (M)odule logging, (S)cript block logging, or (T)ranscription?"
+
+        switch ($loggingChoice) {
+            "M" { # Enable module logging
+                Set-ItemProperty "HKLM:\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\PowerShell\ModuleLogging" -Name EnableModuleLogging -Value 1
+                Set-ItemProperty "HKLM:\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\PowerShell\ModuleLogging\ModuleNames" -Name * -Value *
+                Write-Host "Module logging has been enabled."
+            }
+            "S" { # Enable script block logging
+                Set-ItemProperty "HKLM:\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\PowerShell\ScriptBlockLogging" -Name EnableScriptBlockLogging -Value 1
+                Write-Host "Script block logging has been enabled."
+            }
+            "T" { # Enable transcription
+                Set-ItemProperty "HKLM:\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\PowerShell\Transcription" -Name EnableTranscript -Value 1
+                Set-ItemProperty "HKLM:\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\PowerShell\Transcription" -Name EnableInvocationHeader -Value 1
+                Write-Host "Transcription has been enabled."
+            }
+            default {
+                Write-Host "Invalid input. No logging has been enabled."
+            }
+        }
+    }
+    "D" { # Disable logging
+        $loggingChoice = Read-Host "Which logging do you want to disable? (M)odule logging, (S)cript block logging, or (T)ranscription?"
+
+$loggingChoice = Read-Host "Which logging do you want to enable? (M)odule logging, (S)cript block logging, or (T)ranscription?"
+
+switch ($loggingChoice) {
+    "M" { # Enable module logging
+        Set-ItemProperty "HKLM:\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\PowerShell\ModuleLogging" -Name EnableModuleLogging -Value 1
+        Set-ItemProperty "HKLM:\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\PowerShell\ModuleLogging\ModuleNames" -Name * -Value *
+        Write-Host "Module logging has been enabled."
+    }
+    "S" { # Enable script block logging
+        Set-ItemProperty "HKLM:\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\PowerShell\ScriptBlockLogging" -Name EnableScriptBlockLogging -Value 1
+        Write-Host "Script block logging has been enabled."
+    }
+    "T" { # Enable transcription
+        Set-ItemProperty "HKLM:\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\PowerShell\Transcription" -Name EnableTranscript -Value 1
+        Set-ItemProperty "HKLM:\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\PowerShell\Transcription" -Name EnableInvocationHeader -Value 1
+        Write-Host "Transcription has been enabled."
+    }
+    default {
+        Write-Host "Invalid input. No logging has been enabled."
+    }
+}
+
+$loggingChoice = Read-Host "Which logging do you want to disable? (M)odule logging, (S)cript block logging, or (T)ranscription?"
+
+switch ($loggingChoice) {
+    "M" { # Disable module logging
+        Set-ItemProperty "HKLM:\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\PowerShell\ModuleLogging" -Name EnableModuleLogging -Value 0
+        Write-Host "Module logging has been disabled."
+    }
+    "S" { # Disable script block logging
+        Set-ItemProperty "HKLM:\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\PowerShell\ScriptBlockLogging" -Name EnableScriptBlockLogging -Value 0
+        Write-Host "Script block logging has been disabled."
+    }
+    "T" { # Disable transcription
+        Set-ItemProperty "HKLM:\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\PowerShell\Transcription" -Name EnableTranscript -Value 0
+        Write-Host "Transcription has been disabled."
+    }
+    default {
+        Write-Host "Invalid input. No logging has been disabled."
+    }
+}
+
+	}
+}
